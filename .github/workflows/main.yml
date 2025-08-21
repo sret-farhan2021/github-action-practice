@@ -7,4 +7,4 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Run feed generator
-        uses: sret-farhan2021/dockerized-action-practice@main
+        uses: sret-farhan2021/WCAG2.1-Scanner-github-action@main
