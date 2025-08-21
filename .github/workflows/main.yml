@@ -1,10 +1,29 @@
-name: Generate podcast feed
-on: [push]
+name: WCAG Accessibility Check
+on: [push, pull_request]
+
 jobs:
-  build:
+  accessibility:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Run feed generator
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Run accessibility scanner
         uses: sret-farhan2021/WCAG2.1-Scanner-github-action@main
+        with:
+          email: ${{ github.actor }}@company.com
+          name: ${{ github.actor }}
+          scan_mode: 'auto'
+          
+      - name: Upload accessibility reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-reports
+          path: ./reports/
+          retention-days: 30
+          
+      - name: Show scan results
+        run: |
+          echo "�� Accessibility scan completed!"
+          echo "📁 Reports saved to: ./reports/"
+          ls -la ./reports/
